@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  ============================================================================
+  CROWN & CO. BARBERSHOP — Premium Multi-Page Website
+  Vaughan, Ontario, Canada
+  ----------------------------------------------------------------------------
+  SETUP
+    1. Save this file as  index.html
+    2. Open it in any modern browser — no build step, no server required.
+
+  DEPLOYMENT (fully portable — no proprietary runtime needed)
+    • Vercel   : create a new project, drop this file in as index.html, deploy.
+    • Netlify  : drag & drop the folder containing index.html into Netlify.
+    • GitHub   : push index.html to a repo, enable GitHub Pages.
+    • Any static host / cPanel / S3 works identically.
+
+  CUSTOMIZATION
+    • Business info, services, prices, team, testimonials and gallery images
+      live in clearly-labelled data objects at the top of the <script> block.
+    • No API keys, secrets or external accounts are required.
+
+  STACK
+    HTML5 + Tailwind CSS (CDN) + GSAP (CDN) + Google Fonts.
+    All imagery is loaded from royalty-free Unsplash CDN URLs.
+  ============================================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crown &amp; Co. Barbershop — Vaughan, ON | Sharp Cuts. Timeless Confidence.</title>
+<meta name="description" content="Crown & Co. is Vaughan's premier barbershop. Precision skin fades, hot towel straight razor shaves and beard sculpting. Book your chair today.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z' fill='%23c6a15b'/%3E%3Crect x='4' y='24' width='24' height='2.5' rx='1.25' fill='%23c6a15b'/%3E%3C/svg%3E">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink:   '#0d0c0a',
+        coal:  '#14120f',
+        smoke: '#1c1915',
+        ivory: '#f2ecdf',
+        bone:  '#cfc7b6',
+        mute:  '#8f8779',
+        gold:  '#c6a15b',
+        golddeep: '#a5813f'
+      },
+      fontFamily: {
+        display: ['Fraunces','Georgia','serif'],
+        body: ['Inter','system-ui','sans-serif']
+      }
+    }
+  }
+}
+</script>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<!-- LocalBusiness structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "name": "Crown & Co. Barbershop",
+  "description": "Premium barbershop in Vaughan, Ontario. Skin fades, hot towel shaves, beard sculpting.",
+  "telephone": "+1-905-555-0148",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "7840 Weston Rd, Unit 12",
+    "addressLocality": "Vaughan",
+    "addressRegion": "ON",
+    "postalCode": "L4L 9N8",
+    "addressCountry": "CA"
+  },
+  "openingHours": ["Tu-Fr 09:00-20:00", "Sa 08:00-18:00", "Su 10:00-16:00"]
+}
+</script>
+
+<style>
+/* ============================= BASE ============================= */
+html { -webkit-font-smoothing: antialiased; }
+body { background:#0d0c0a; color:#f2ecdf; font-family:'Inter',system-ui,sans-serif; overflow-x:hidden; }
+::selection { background:#c6a15b; color:#0d0c0a; }
+:focus-visible { outline:1px solid #c6a15b; outline-offset:3px; }
+
+::-webkit-scrollbar { width:9px; }
+::-webkit-scrollbar-track { background:#0d0c0a; }
+::-webkit-scrollbar-thumb { background:#3a352c; border-radius:99px; border:2px solid #0d0c0a; }
+::-webkit-scrollbar-thumb:hover { background:#c6a15b; }
+
+/* ============================= TYPO HELPERS ============================= */
+.eyebrow { font-size:11px; letter-spacing:.38em; text-transform:uppercase; color:#c6a15b; font-weight:500; display:inline-flex; align-items:center; gap:14px; }
+.eyebrow::before { content:''; width:34px; height:1px; background:linear-gradient(90deg,transparent,#c6a15b); }
+.display-xl { font-family:'Fraunces',serif; font-weight:400; line-height:1.02; letter-spacing:-0.01em; }
+.outline-word { color:transparent; -webkit-text-stroke:1px rgba(198,161,91,.10); font-family:'Fraunces',serif; user-select:none; pointer-events:none; }
+
+/* ============================= BUTTONS ============================= */
+.btn { position:relative; display:inline-flex; align-items:center; justify-content:center; gap:12px; padding:1.05rem 2.2rem; font-size:12px; letter-spacing:.28em; text-transform:uppercase; font-weight:600; overflow:hidden; cursor:pointer; transition:color .45s cubic-bezier(.22,1,.36,1), border-color .45s; white-space:nowrap; }
+.btn::before { content:''; position:absolute; inset:0; transform:scaleX(0); transform-origin:right; transition:transform .55s cubic-bezier(.22,1,.36,1); z-index:0; }
+.btn:hover::before { transform:scaleX(1); transform-origin:left; }
+.btn > * { position:relative; z-index:1; }
+.btn-gold { background:#c6a15b; color:#0d0c0a; }
+.btn-gold::before { background:#f2ecdf; }
+.btn-outline { border:1px solid rgba(242,236,223,.28); color:#f2ecdf; }
+.btn-outline::before { background:#c6a15b; }
+.btn-outline:hover { color:#0d0c0a; border-color:#c6a15b; }
+.btn-sm { padding:.75rem 1.5rem; font-size:10px; }
+
+/* ============================= NAV ============================= */
+.nav-link { position:relative; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:#cfc7b6; transition:color .35s; padding:6px 0; }
+.nav-link::after { content:''; position:absolute; left:0; bottom:0; width:100%; height:1px; background:#c6a15b; transform:scaleX(0); transform-origin:right; transition:transform .45s cubic-bezier(.22,1,.36,1); }
+.nav-link:hover { color:#f2ecdf; }
+.nav-link:hover::after, .nav-link.active::after { transform:scaleX(1); transform-origin:left; }
+.nav-link.active { color:#c6a15b; }
+
+#siteHeader { transition:background .5s, border-color .5s, backdrop-filter .5s; border-bottom:1px solid transparent; }
+#siteHeader.scrolled { background:rgba(13,12,10,.88); backdrop-filter:blur(14px); border-bottom-color:rgba(198,161,91,.14); }
+#siteHeader.scrolled .header-inner { height:4.5rem; }
+.header-inner { transition:height .5s cubic-bezier(.22,1,.36,1); }
+
+/* ============================= PAGES / TRANSITIONS ============================= */
+.page { display:none; }
+.page.active { display:block; }
+#pageTransition { visibility:hidden; }
+.tp { transform:scaleY(0); }
+
+/* ============================= REVEAL ============================= */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity 1s cubic-bezier(.22,1,.36,1), transform 1s cubic-bezier(.22,1,.36,1); transition-delay:var(--d,0s); will-change:opacity,transform; }
+.reveal.revealed { opacity:1; transform:none; }
+
+/* ============================= MARQUEE ============================= */
+.marquee { overflow:hidden; }
+.marquee-track { display:flex; width:max-content; animation:marquee 30s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state:paused; }
+@keyframes marquee { to { transform:translateX(-50%); } }
+
+/* ============================= FRAMES / IMAGERY ============================= */
+.frame { position:relative; }
+.frame::after { content:''; position:absolute; inset:0; border:1px solid rgba(198,161,91,.45); transform:translate(16px,16px); pointer-events:none; transition:transform .6s cubic-bezier(.22,1,.36,1); }
+.frame:hover::after { transform:translate(10px,10px); }
+.spin-slow { animation:spin 20s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.grain { position:fixed; inset:-50%; width:200%; height:200%; z-index:60; pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 8s steps(10) infinite; }
+@keyframes grain { 0%,100%{transform:translate(0,0)} 10%{transform:translate(-3%,-4%)} 30%{transform:translate(4%,2%)} 50%{transform:translate(-2%,5%)} 70%{transform:translate(5%,-3%)} 90%{transform:translate(-4%,3%)} }
+
+/* ============================= SERVICE ROWS ============================= */
+.service-row { border-bottom:1px solid rgba(255,255,255,.06); transition:background .5s; }
+.service-row:hover { background:linear-gradient(90deg,rgba(198,161,91,.07),transparent 65%); }
+.service-row .s-num { transition:color .4s, transform .4s; }
+.service-row:hover .s-num { color:#c6a15b; transform:translateX(6px); }
+.service-row .s-price { transition:transform .4s; }
+.service-row:hover .s-price { transform:translateX(-4px); }
+
+/* ============================= GALLERY ============================= */
+.g-item { transition:opacity .35s, transform .35s; }
+.g-hide { opacity:0; transform:scale(.96); }
+.g-filter { font-size:11px; letter-spacing:.26em; text-transform:uppercase; padding:.7rem 1.4rem; border:1px solid rgba(255,255,255,.12); color:#cfc7b6; transition:all .4s; cursor:pointer; }
+.g-filter:hover { border-color:rgba(198,161,91,.5); color:#f2ecdf; }
+.g-filter.active { background:#c6a15b; border-color:#c6a15b; color:#0d0c0a; font-weight:600; }
+
+/* ============================= FORMS ============================= */
+.field { width:100%; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.1); color:#f2ecdf; padding:.95rem 1.15rem; font-size:14px; transition:border-color .35s, background .35s; }
+.field::placeholder { color:#6f6859; }
+.field:focus { outline:none; border-color:#c6a15b; background:rgba(198,161,91,.05); }
+.field.err { border-color:#c97b63; }
+select.field { appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23c6a15b' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1.1rem center; padding-right:2.8rem; cursor:pointer; }
+select.field option { background:#14120f; color:#f2ecdf; }
+input[type="date"].field { color-scheme:dark; cursor:pointer; }
+.err-msg { color:#c97b63; font-size:11px; letter-spacing:.08em; margin-top:6px; display:none; }
+.err-msg.show { display:block; }
+
+.slot { padding:.6rem .4rem; font-size:12px; letter-spacing:.06em; border:1px solid rgba(255,255,255,.12); color:#cfc7b6; text-align:center; cursor:pointer; transition:all .3s; }
+.slot:hover:not(.taken):not(.sel) { border-color:rgba(198,161,91,.6); color:#f2ecdf; }
+.slot.sel { background:#c6a15b; border-color:#c6a15b; color:#0d0c0a; font-weight:600; }
+.slot.taken { opacity:.28; text-decoration:line-through; cursor:not-allowed; }
+
+/* ============================= FAQ ============================= */
+.faq-a { max-height:0; overflow:hidden; transition:max-height .55s cubic-bezier(.22,1,.36,1); }
+.faq-icon { transition:transform .45s cubic-bezier(.22,1,.36,1); }
+.faq-item.open .faq-icon { transform:rotate(45deg); color:#c6a15b; }
+.faq-item.open .faq-q span:first-child { color:#c6a15b; }
+
+/* ============================= PRELOADER ============================= */
+#preloader { position:fixed; inset:0; z-index:500; background:#0d0c0a; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:26px; }
+.pre-crown path, .pre-crown rect { stroke-dasharray:200; stroke-dashoffset:200; animation:draw 1.6s ease forwards; }
+@keyframes draw { to { stroke-dashoffset:0; } }
+.pre-bar { width:180px; height:1px; background:rgba(255,255,255,.1); overflow:hidden; }
+.pre-bar span { display:block; height:100%; width:40%; background:#c6a15b; animation:load 1.2s ease-in-out infinite; }
+@keyframes load { 0%{transform:translateX(-100%)} 100%{transform:translateX(450%)} }
+
+/* ============================= CURSOR ============================= */
+#cursorDot, #cursorRing { position:fixed; top:0; left:0; pointer-events:none; z-index:600; border-radius:50%; }
+#cursorDot { width:5px; height:5px; background:#c6a15b; transform:translate(-50%,-50%); }
+#cursorRing { width:34px; height:34px; border:1px solid rgba(198,161,91,.5); transform:translate(-50%,-50%); transition:width .3s, height .3s, border-color .3s, background .3s; }
+#cursorRing.grow { width:58px; height:58px; border-color:rgba(198,161,91,.9); background:rgba(198,161,91,.06); }
+@media (pointer:coarse) { #cursorDot, #cursorRing { display:none; } }
+
+/* ============================= MAP PLACEHOLDER ============================= */
+.map-grid { background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size:44px 44px; }
+.pin-pulse::before { content:''; position:absolute; inset:-14px; border-radius:50%; border:1px solid rgba(198,161,91,.5); animation:pulse 2.2s ease-out infinite; }
+@keyframes pulse { 0%{transform:scale(.5); opacity:1} 100%{transform:scale(1.6); opacity:0} }
+
+/* ============================= MISC ============================= */
+.gold-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(198,161,91,.5),transparent); }
+.tick { color:#c6a15b; }
+.ts-dot { width:26px; height:2px; background:rgba(255,255,255,.15); transition:background .4s; cursor:pointer; }
+.ts-dot.active { background:#c6a15b; }
+.hour-today { color:#c6a15b; }
+.backdrop-panel { background:linear-gradient(160deg,#16140f,#0d0c0a); }
+</style>
+</head>
+
+<body class="font-body">
+
+<!-- Film grain -->
+<div class="grain"></div>
+
+<!-- Custom cursor -->
+<div id="cursorDot"></div>
+<div id="cursorRing"></div>
+
+<!-- ============================= PRELOADER ============================= -->
+<div id="preloader">
+  <svg class="pre-crown" width="54" height="54" viewBox="0 0 32 32" fill="none" stroke="#c6a15b" stroke-width="1.4">
+    <path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/>
+    <rect x="4" y="24" width="24" height="2.5" rx="1.25"/>
+  </svg>
+  <p class="font-display text-xl tracking-[0.35em] text-ivory">CROWN <span class="text-gold">&amp;</span> CO.</p>
+  <p class="text-[10px] tracking-[0.5em] uppercase text-mute -mt-4">Barbershop · Vaughan</p>
+  <div class="pre-bar"><span></span></div>
+</div>
+
+<!-- ============================= PAGE TRANSITION ============================= -->
+<div id="pageTransition" class="fixed inset-0 z-[450] pointer-events-none">
+  <div class="tp tp-gold absolute inset-0 bg-gold"></div>
+  <div class="tp tp-ink absolute inset-0 bg-ink flex items-center justify-center">
+    <svg width="44" height="44" viewBox="0 0 32 32" fill="#c6a15b"><path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/><rect x="4" y="24" width="24" height="2.5" rx="1.25"/></svg>
+  </div>
+</div>
+
+<!-- ============================= HEADER ============================= -->
+<header id="siteHeader" class="fixed top-0 inset-x-0 z-[100]">
+  <div class="header-inner max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20 lg:h-24">
+    <a href="#/" class="flex items-center gap-3 group" aria-label="Crown and Co. home">
+      <svg width="30" height="30" viewBox="0 0 32 32" class="text-gold transition-transform duration-500 group-hover:-rotate-6" fill="currentColor"><path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/><rect x="4" y="24" width="24" height="2.5" rx="1.25"/></svg>
+      <span class="leading-none">
+        <span class="font-display text-xl tracking-wide block">Crown <span class="text-gold">&amp;</span> Co.</span>
+        <span class="text-[9px] tracking-[0.42em] uppercase text-mute block mt-1">Barbershop · Vaughan</span>
+      </span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
+      <a href="#/" class="nav-link" data-route="home">Home</a>
+      <a href="#/services" class="nav-link" data-route="services">Services</a>
+      <a href="#/about" class="nav-link" data-route="about">About</a>
+      <a href="#/gallery" class="nav-link" data-route="gallery">Gallery</a>
+      <a href="#/contact" class="nav-link" data-route="contact">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-5">
+      <a href="tel:+19055550148" class="hidden xl:flex items-center gap-2 text-bone hover:text-gold transition text-sm tracking-wider">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg>
+        (905) 555-0148
+      </a>
+      <button class="btn btn-gold btn-sm js-book hidden sm:inline-flex"><span>Book Now</span></button>
+      <button id="menuBtn" class="lg:hidden flex flex-col gap-[6px] p-2" aria-label="Open menu">
+        <span class="w-7 h-px bg-ivory"></span><span class="w-5 h-px bg-gold ml-auto"></span><span class="w-7 h-px bg-ivory"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= MOBILE MENU ============================= -->
+<div id="mobileMenu" class="fixed inset-0 z-[200] bg-ink hidden flex-col" style="display:none;">
+  <div class="flex items-center justify-between px-6 h-20 border-b border-white/5">
+    <span class="font-display text-lg">Crown <span class="text-gold">&amp;</span> Co.</span>
+    <button id="closeMenuBtn" class="p-2 text-ivory" aria-label="Close menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 flex flex-col justify-center px-8 gap-2" aria-label="Mobile">
+    <a href="#/" class="m-link font-display text-4xl py-3 text-ivory hover:text-gold transition flex items-baseline gap-4"><span class="text-xs text-gold/60 font-body">01</span>Home</a>
+    <a href="#/services" class="m-link font-display text-4xl py-3 text-ivory hover:text-gold transition flex items-baseline gap-4"><span class="text-xs text-gold/60 font-body">02</span>Services</a>
+    <a href="#/about" class="m-link font-display text-4xl py-3 text-ivory hover:text-gold transition flex items-baseline gap-4"><span class="text-xs text-gold/60 font-body">03</span>About</a>
+    <a href="#/gallery" class="m-link font-display text-4xl py-3 text-ivory hover:text-gold transition flex items-baseline gap-4"><span class="text-xs text-gold/60 font-body">04</span>Gallery</a>
+    <a href="#/contact" class="m-link font-display text-4xl py-3 text-ivory hover:text-gold transition flex items-baseline gap-4"><span class="text-xs text-gold/60 font-body">05</span>Contact</a>
+  </nav>
+  <div class="px-8 pb-10">
+    <button class="btn btn-gold w-full js-book mb-6"><span>Book an Appointment</span></button>
+    <p class="text-mute text-xs tracking-widest">7840 WESTON RD, UNIT 12, VAUGHAN ON</p>
+    <p class="text-mute text-xs tracking-widest mt-1">(905) 555-0148</p>
+  </div>
+</div>
+
+<main id="app">
+
+<!-- ################################################################## -->
+<!-- ============================ HOME PAGE =========================== -->
+<!-- ################################################################## -->
+<section class="page" data-page="home">
+
+  <!-- HERO -->
+  <div class="relative min-h-screen flex items-center overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=2000&q=80" alt="Crown and Co. barbershop interior" class="w-full h-full object-cover opacity-40">
+      <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/60"></div>
+    </div>
+    <div class="outline-word absolute -bottom-8 left-0 text-[20vw] leading-none whitespace-nowrap">CROWN</div>
+
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 w-full pt-32 pb-24 grid lg:grid-cols-12 gap-14 items-center">
+      <!-- Left -->
+      <div class="lg:col-span-7">
+        <p class="eyebrow hero-fade">Vaughan's Premier Barbershop — Est. 2012</p>
+        <h1 class="display-xl text-[13.5vw] sm:text-7xl xl:text-[6.2rem] mt-7">
+          <span class="block overflow-hidden pb-1"><span class="hero-line block">Sharp Cuts.</span></span>
+          <span class="block overflow-hidden pb-2"><span class="hero-line block">Timeless <em class="italic text-gold font-light">Confidence.</em></span></span>
+        </h1>
+        <p class="hero-fade text-bone/85 text-base md:text-lg leading-relaxed max-w-xl mt-7 font-light">
+          A modern barbershop rooted in old-school craft. Precision fades, straight-razor shaves and unhurried service — in the heart of Vaughan, Ontario.
+        </p>
+        <div class="hero-fade flex flex-wrap items-center gap-4 mt-10">
+          <button class="btn btn-gold js-book"><span>Book an Appointment</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <a href="#/services" class="btn btn-outline"><span>Explore Services</span></a>
+        </div>
+        <div class="hero-fade flex flex-wrap items-center gap-x-8 gap-y-4 mt-12 text-sm">
+          <span class="flex items-center gap-2.5">
+            <span class="flex text-gold" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+            </span>
+            <span class="text-bone"><strong class="text-ivory font-medium">4.9</strong> · 320+ Google reviews</span>
+          </span>
+          <span class="hidden sm:block w-px h-4 bg-white/15"></span>
+          <span class="text-bone flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>Walk-ins welcome</span>
+        </div>
+      </div>
+
+      <!-- Right composition -->
+      <div class="lg:col-span-5 relative hidden md:block hero-fade">
+        <div class="frame relative overflow-hidden aspect-[3/4] max-w-sm ml-auto">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1000&q=80" alt="Barber performing a precision haircut" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/50 to-transparent"></div>
+        </div>
+        <div class="absolute -bottom-10 -left-4 w-48 aspect-square overflow-hidden border-[6px] border-ink shadow-2xl">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=80" alt="Beard trim detail" class="w-full h-full object-cover">
+        </div>
+        <!-- Rotating badge -->
+        <div class="absolute -top-10 -left-10 w-32 h-32">
+          <svg viewBox="0 0 100 100" class="w-full h-full spin-slow">
+            <defs><path id="circlePath" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+            <text fill="#c6a15b" style="font-size:8px;letter-spacing:2.6px;font-family:Inter,sans-serif;">
+              <textPath href="#circlePath">CROWN &amp; CO • BARBERSHOP • VAUGHAN ON •</textPath>
+            </text>
+          </svg>
+          <svg class="absolute inset-0 m-auto" width="26" height="26" viewBox="0 0 32 32" fill="#c6a15b"><path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/><rect x="4" y="24" width="24" height="2.5" rx="1.25"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-fade absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-3 text-mute">
+      <span class="text-[10px] tracking-[0.4em] uppercase">Scroll</span>
+      <span class="w-px h-10 bg-gradient-to-b from-gold to-transparent"></span>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee border-y border-gold/15 bg-coal py-5">
+    <div class="marquee-track">
+      <div class="flex items-center gap-10 pr-10 font-display text-lg md:text-xl tracking-wide text-bone/80 whitespace-nowrap">
+        <span>Skin Fades</span><span class="text-gold text-sm">✦</span><span>Hot Towel Shaves</span><span class="text-gold text-sm">✦</span><span>Beard Sculpting</span><span class="text-gold text-sm">✦</span><span>Classic Cuts</span><span class="text-gold text-sm">✦</span><span>Straight Razor Detail</span><span class="text-gold text-sm">✦</span><span>Kids' Cuts</span><span class="text-gold text-sm">✦</span>
+      </div>
+      <div class="flex items-center gap-10 pr-10 font-display text-lg md:text-xl tracking-wide text-bone/80 whitespace-nowrap" aria-hidden="true">
+        <span>Skin Fades</span><span class="text-gold text-sm">✦</span><span>Hot Towel Shaves</span><span class="text-gold text-sm">✦</span><span>Beard Sculpting</span><span class="text-gold text-sm">✦</span><span>Classic Cuts</span><span class="text-gold text-sm">✦</span><span>Straight Razor Detail</span><span class="text-gold text-sm">✦</span><span>Kids' Cuts</span><span class="text-gold text-sm">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-28 lg:py-36 grid lg:grid-cols-2 gap-16 items-center">
+    <div>
+      <p class="eyebrow reveal">The Crown Standard</p>
+      <h2 class="display-xl text-4xl md:text-5xl xl:text-6xl mt-6 reveal" style="--d:.08s">More than a haircut —<br><em class="italic text-gold font-light">it's a ritual.</em></h2>
+      <p class="text-bone/85 leading-relaxed mt-8 max-w-lg font-light reveal" style="--d:.14s">
+        Tucked into the heart of Vaughan, Crown &amp; Co. is a modern barbershop built on old-school values: take your time, do it right, and treat every guest like a regular.
+      </p>
+      <p class="text-bone/85 leading-relaxed mt-5 max-w-lg font-light reveal" style="--d:.2s">
+        From precision skin fades to traditional hot towel shaves, every service ends the same way — with you looking in the mirror and liking what you see.
+      </p>
+      <div class="flex items-center gap-6 mt-10 reveal" style="--d:.26s">
+        <a href="#/about" class="group inline-flex items-center gap-3 text-gold text-xs tracking-[0.3em] uppercase">
+          Our Story
+          <svg class="transition-transform duration-500 group-hover:translate-x-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <span class="w-10 h-px bg-gold/30"></span>
+        <p class="font-display italic text-bone/70">Marcus Cole — Founder</p>
+      </div>
+    </div>
+    <div class="relative reveal" style="--d:.15s">
+      <div class="frame overflow-hidden aspect-[4/5] max-w-md">
+        <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?auto=format&fit=crop&w=1000&q=80" alt="Vintage barber chair at Crown and Co." loading="lazy" class="w-full h-full object-cover">
+      </div>
+      <div class="absolute -bottom-8 -right-4 sm:right-8 bg-gold text-ink px-7 py-6 shadow-2xl">
+        <p class="font-display text-4xl leading-none"><span class="counter" data-count="12">0</span>+</p>
+        <p class="text-[10px] tracking-[0.3em] uppercase mt-2 font-semibold">Years of Craft</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="border-y border-white/5 bg-coal">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+      <div class="reveal"><p class="font-display text-5xl text-gold"><span class="counter" data-count="12">0</span>+</p><p class="text-mute text-xs tracking-[0.3em] uppercase mt-3">Years of Craft</p></div>
+      <div class="reveal" style="--d:.08s"><p class="font-display text-5xl text-gold"><span class="counter" data-count="15">0</span>k+</p><p class="text-mute text-xs tracking-[0.3em] uppercase mt-3">Cuts Delivered</p></div>
+      <div class="reveal" style="--d:.16s"><p class="font-display text-5xl text-gold"><span class="counter" data-count="4.9">0</span></p><p class="text-mute text-xs tracking-[0.3em] uppercase mt-3">Google Rating</p></div>
+      <div class="reveal" style="--d:.24s"><p class="font-display text-5xl text-gold"><span class="counter" data-count="4">0</span></p><p class="text-mute text-xs tracking-[0.3em] uppercase mt-3">Master Barbers</p></div>
+    </div>
+  </div>
+
+  <!-- FEATURED SERVICES -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-28 lg:py-36">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+      <div>
+        <p class="eyebrow reveal">What We Do</p>
+        <h2 class="display-xl text-4xl md:text-5xl mt-5 reveal" style="--d:.08s">Signature <em class="italic text-gold font-light">Services</em></h2>
+      </div>
+      <a href="#/services" class="group inline-flex items-center gap-3 text-xs tracking-[0.3em] uppercase text-bone hover:text-gold transition reveal" style="--d:.15s">
+        View All Services &amp; Pricing
+        <svg class="transition-transform duration-500 group-hover:translate-x-2" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div id="featuredServices" class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6"></div>
+  </div>
+
+  <!-- WHY BAND -->
+  <div class="bg-coal border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 grid md:grid-cols-3 gap-12">
+      <div class="reveal">
+        <svg class="text-gold mb-6" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/></svg>
+        <h3 class="font-display text-2xl mb-3">Master Barbers</h3>
+        <p class="text-mute leading-relaxed font-light text-sm">A senior team with 30+ combined years behind the chair. No apprentices practising on your fade.</p>
+      </div>
+      <div class="reveal" style="--d:.1s">
+        <svg class="text-gold mb-6" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l3 5 5-3-1.5 9h-13L4 5l5 3 3-5z"/><path d="M5 17h14"/></svg>
+        <h3 class="font-display text-2xl mb-3">Premium Products</h3>
+        <p class="text-mute leading-relaxed font-light text-sm">Suavecito, Layrite and Proraso — the good stuff, always. Available to take home in-shop.</p>
+      </div>
+      <div class="reveal" style="--d:.2s">
+        <svg class="text-gold mb-6" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2.7s6 6.3 6 10.3a6 6 0 0 1-12 0C6 9 12 2.7 12 2.7z"/><path d="M9.5 13.5a2.5 2.5 0 0 0 2.5 2.5"/></svg>
+        <h3 class="font-display text-2xl mb-3">The Hot Towel Finish</h3>
+        <p class="text-mute leading-relaxed font-light text-sm">Every cut ends with a hot-lather neck shave and a steamed towel. On the house, every time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY PREVIEW -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-28 lg:py-36">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+      <div>
+        <p class="eyebrow reveal">The Work</p>
+        <h2 class="display-xl text-4xl md:text-5xl mt-5 reveal" style="--d:.08s">Fresh From <em class="italic text-gold font-light">The Chairs</em></h2>
+      </div>
+      <a href="#/gallery" class="group inline-flex items-center gap-3 text-xs tracking-[0.3em] uppercase text-bone hover:text-gold transition reveal" style="--d:.15s">
+        Full Gallery
+        <svg class="transition-transform duration-500 group-hover:translate-x-2" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div id="previewGallery" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="bg-coal border-y border-white/5 relative overflow-hidden">
+    <div class="outline-word absolute top-4 right-0 text-[14vw] leading-none">REVIEWS</div>
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-28 lg:py-32 relative">
+      <p class="eyebrow justify-center w-full reveal">Kind Words</p>
+      <div class="overflow-hidden mt-12 reveal" style="--d:.1s">
+        <div id="tsTrack" class="flex transition-transform duration-[800ms]" style="transition-timing-function:cubic-bezier(.22,1,.36,1);"></div>
+      </div>
+      <div class="flex items-center justify-center gap-8 mt-12 reveal" style="--d:.18s">
+        <button id="tsPrev" class="w-12 h-12 border border-white/15 flex items-center justify-center text-bone hover:border-gold hover:text-gold transition" aria-label="Previous review">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        </button>
+        <div id="tsDots" class="flex items-center gap-2"></div>
+        <button id="tsNext" class="w-12 h-12 border border-white/15 flex items-center justify-center text-bone hover:border-gold hover:text-gold transition" aria-label="Next review">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISIT US -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-28 lg:py-36 grid lg:grid-cols-2 gap-16">
+    <div>
+      <p class="eyebrow reveal">Visit The Shop</p>
+      <h2 class="display-xl text-4xl md:text-5xl mt-6 reveal" style="--d:.08s">Find Your <em class="italic text-gold font-light">Chair</em></h2>
+      <div class="mt-8 flex items-center gap-3 reveal" style="--d:.14s">
+        <span id="openDot" class="w-2 h-2 rounded-full bg-gold"></span>
+        <span id="openBadge" class="text-sm text-bone tracking-wide">Checking hours…</span>
+      </div>
+      <div id="hoursList" class="mt-8 space-y-0 max-w-md reveal" style="--d:.18s"></div>
+      <div class="mt-10 space-y-4 text-sm reveal" style="--d:.22s">
+        <p class="flex items-start gap-4 text-bone"><svg class="text-gold mt-0.5 shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>7840 Weston Rd, Unit 12<br>Vaughan, ON L4L 9N8</p>
+        <p class="flex items-center gap-4 text-bone"><svg class="text-gold shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg><a href="tel:+19055550148" class="hover:text-gold transition">(905) 555-0148</a></p>
+        <p class="flex items-center gap-4 text-bone"><svg class="text-gold shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg><a href="mailto:bookings@crownandco.ca" class="hover:text-gold transition">bookings@crownandco.ca</a></p>
+      </div>
+      <div class="flex flex-wrap gap-4 mt-10 reveal" style="--d:.26s">
+        <button class="btn btn-gold js-book"><span>Book an Appointment</span></button>
+        <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&amp;query=7840+Weston+Road+Vaughan+ON" target="_blank" rel="noopener"><span>Get Directions</span></a>
+      </div>
+    </div>
+    <!-- Map placeholder -->
+    <div class="reveal" style="--d:.15s">
+      <div class="relative h-full min-h-[420px] bg-[#121009] border border-white/8 overflow-hidden map-grid">
+        <div class="absolute w-[140%] h-10 bg-[#1b1812] -left-[20%] top-[38%] -rotate-6"></div>
+        <div class="absolute w-[140%] h-6 bg-[#181510] -left-[20%] top-[64%] rotate-3"></div>
+        <div class="absolute h-[140%] w-8 bg-[#1b1812] left-[30%] -top-[20%] rotate-12"></div>
+        <div class="absolute h-[140%] w-5 bg-[#181510] left-[68%] -top-[20%] -rotate-8"></div>
+        <div class="absolute w-[140%] h-px -left-[20%] top-[41%] -rotate-6 border-t border-dashed border-gold/25"></div>
+        <span class="absolute top-[30%] left-[18%] text-[9px] tracking-[0.3em] uppercase text-mute/70 -rotate-6">Weston Rd</span>
+        <span class="absolute top-[70%] left-[55%] text-[9px] tracking-[0.3em] uppercase text-mute/70 rotate-3">Langstaff Rd E</span>
+        <!-- Pin -->
+        <div class="absolute left-[46%] top-[42%]">
+          <div class="pin-pulse relative w-12 h-12 rounded-full bg-gold flex items-center justify-center shadow-[0_0_40px_rgba(198,161,91,.45)]">
+            <svg width="20" height="20" viewBox="0 0 32 32" fill="#0d0c0a"><path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/><rect x="4" y="24" width="24" height="2.5" rx="1.25"/></svg>
+          </div>
+        </div>
+        <!-- Card -->
+        <div class="absolute bottom-5 left-5 right-5 sm:right-auto bg-ink/90 backdrop-blur border border-gold/20 p-5 max-w-xs">
+          <p class="font-display text-lg">Crown &amp; Co. Barbershop</p>
+          <p class="text-mute text-xs mt-1.5 leading-relaxed">7840 Weston Rd, Unit 12<br>Vaughan, ON L4L 9N8</p>
+          <p class="text-gold text-[10px] tracking-[0.25em] uppercase mt-3">Free plaza parking on-site</p>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=7840+Weston+Road+Vaughan+ON" target="_blank" rel="noopener" class="absolute top-5 right-5 bg-ink/90 backdrop-blur border border-white/10 px-4 py-2.5 text-[10px] tracking-[0.25em] uppercase text-bone hover:text-gold hover:border-gold/40 transition flex items-center gap-2">
+          Open in Google Maps
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div data-component="cta"></div>
+</section>
+
+<!-- ################################################################## -->
+<!-- ========================== SERVICES PAGE ========================= -->
+<!-- ################################################################## -->
+<section class="page" data-page="services">
+  <div class="relative pt-40 pb-24 overflow-hidden">
+    <div class="absolute inset-0"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1800&q=80" alt="" class="w-full h-full object-cover opacity-20"><div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/90 to-ink"></div></div>
+    <div class="outline-word absolute -bottom-6 right-0 text-[15vw] leading-none">CRAFT</div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+      <p class="text-mute text-[11px] tracking-[0.3em] uppercase reveal"><a href="#/" class="hover:text-gold transition">Home</a> <span class="text-gold mx-2">/</span> Services</p>
+      <h1 class="display-xl text-5xl md:text-7xl mt-6 reveal" style="--d:.08s">Services &amp; <em class="italic text-gold font-light">Pricing</em></h1>
+      <p class="text-bone/80 max-w-xl mt-6 font-light leading-relaxed reveal" style="--d:.14s">Every service begins with a consultation and ends with a hot towel. All prices in CAD — HST included, no surprises at the till.</p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+    <div id="serviceGroups"></div>
+    <div class="backdrop-panel border border-gold/15 p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 justify-between reveal">
+      <div>
+        <h3 class="font-display text-2xl">Not sure what you need?</h3>
+        <p class="text-mute text-sm mt-2 font-light">Book a signature cut and your barber will consult with you in the chair — we'll find the right look together.</p>
+      </div>
+      <button class="btn btn-gold js-book shrink-0"><span>Book a Consultation</span></button>
+    </div>
+  </div>
+
+  <div data-component="cta"></div>
+</section>
+
+<!-- ################################################################## -->
+<!-- =========================== ABOUT PAGE =========================== -->
+<!-- ################################################################## -->
+<section class="page" data-page="about">
+  <div class="relative pt-40 pb-24 overflow-hidden">
+    <div class="absolute inset-0"><img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=1800&q=80" alt="" class="w-full h-full object-cover opacity-20"><div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/90 to-ink"></div></div>
+    <div class="outline-word absolute -bottom-6 right-0 text-[15vw] leading-none">STORY</div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+      <p class="text-mute text-[11px] tracking-[0.3em] uppercase reveal"><a href="#/" class="hover:text-gold transition">Home</a> <span class="text-gold mx-2">/</span> About</p>
+      <h1 class="display-xl text-5xl md:text-7xl mt-6 reveal" style="--d:.08s">One Chair.<br>One <em class="italic text-gold font-light">Standard.</em></h1>
+    </div>
+  </div>
+
+  <!-- Story -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="relative reveal">
+      <div class="frame overflow-hidden aspect-[4/5]">
+        <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=1000&q=80" alt="Crown and Co. barbershop storefront" loading="lazy" class="w-full h-full object-cover">
+      </div>
+      <div class="absolute -bottom-8 -right-2 sm:-right-6 bg-coal border border-gold/25 px-7 py-6">
+        <p class="font-display text-3xl text-gold">Est. 2012</p>
+        <p class="text-mute text-[10px] tracking-[0.3em] uppercase mt-1.5">Vaughan, Ontario</p>
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow reveal">Our Story</p>
+      <h2 class="display-xl text-4xl md:text-5xl mt-6 reveal" style="--d:.08s">Built on a simple belief: a haircut should be an <em class="italic text-gold font-light">experience</em>, not an errand.</h2>
+      <div class="space-y-5 mt-8 text-bone/85 leading-relaxed font-light">
+        <p class="reveal" style="--d:.12s">Crown &amp; Co. opened its doors in 2012 with one chair, one barber, and that single belief. Founder Marcus Cole spent a decade cutting hair in downtown Toronto before bringing his craft north to Vaughan — determined to build the kind of shop he'd want to sit in himself: unhurried, detail-obsessed and genuinely welcoming.</p>
+        <p class="reveal" style="--d:.18s">Twelve years and fifteen thousand haircuts later, that single chair has grown into one of Vaughan's most trusted barbershops. The tools have been upgraded and the team has grown — but the standard hasn't changed: <span class="text-ivory">every guest leaves sharper than they came in.</span></p>
+      </div>
+      <div class="gold-divider mt-10 reveal" style="--d:.22s"></div>
+      <div class="grid grid-cols-3 gap-6 mt-8 text-center reveal" style="--d:.26s">
+        <div><p class="font-display text-3xl text-gold">2012</p><p class="text-mute text-[10px] tracking-[0.25em] uppercase mt-1.5">Founded</p></div>
+        <div><p class="font-display text-3xl text-gold">15k+</p><p class="text-mute text-[10px] tracking-[0.25em] uppercase mt-1.5">Haircuts</p></div>
+        <div><p class="font-display text-3xl text-gold">4.9</p><p class="text-mute text-[10px] tracking-[0.25em] uppercase mt-1.5">Avg. Rating</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <div class="bg-coal border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+      <p class="eyebrow reveal">What We Stand For</p>
+      <h2 class="display-xl text-4xl md:text-5xl mt-6 mb-14 reveal" style="--d:.08s">The Crown <em class="italic text-gold font-light">Difference</em></h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5">
+        <div class="bg-coal p-8 reveal"><p class="font-display text-gold/50 text-lg mb-4">01</p><h3 class="font-display text-xl mb-3">Precision</h3><p class="text-mute text-sm leading-relaxed font-light">Every line checked twice, every blend inspected from three angles before the cape comes off.</p></div>
+        <div class="bg-coal p-8 reveal" style="--d:.08s"><p class="font-display text-gold/50 text-lg mb-4">02</p><h3 class="font-display text-xl mb-3">Hospitality</h3><p class="text-mute text-sm leading-relaxed font-light">Coffee or a cold one on arrival. Your appointment starts on time. You're a guest, not a number.</p></div>
+        <div class="bg-coal p-8 reveal" style="--d:.16s"><p class="font-display text-gold/50 text-lg mb-4">03</p><h3 class="font-display text-xl mb-3">Craft</h3><p class="text-mute text-sm leading-relaxed font-light">Our barbers train continuously — new techniques, classic methods, and the discipline to know when to use each.</p></div>
+        <div class="bg-coal p-8 reveal" style="--d:.24s"><p class="font-display text-gold/50 text-lg mb-4">04</p><h3 class="font-display text-xl mb-3">Consistency</h3><p class="text-mute text-sm leading-relaxed font-light">Your cut is documented. Same standard, every chair, every visit — even if your barber is away.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+      <div>
+        <p class="eyebrow reveal">The Team</p>
+        <h2 class="display-xl text-4xl md:text-5xl mt-6 reveal" style="--d:.08s">Meet The <em class="italic text-gold font-light">Barbers</em></h2>
+      </div>
+      <p class="text-mute text-sm max-w-xs font-light reveal" style="--d:.14s">Four chairs. Four specialists. Zero egos — just craftsmen who take your look personally.</p>
+    </div>
+    <div id="teamGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+  </div>
+
+  <div data-component="cta"></div>
+</section>
+
+<!-- ################################################################## -->
+<!-- ========================== GALLERY PAGE ========================== -->
+<!-- ################################################################## -->
+<section class="page" data-page="gallery">
+  <div class="relative pt-40 pb-24 overflow-hidden">
+    <div class="absolute inset-0"><img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=1800&q=80" alt="" class="w-full h-full object-cover opacity-20"><div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/90 to-ink"></div></div>
+    <div class="outline-word absolute -bottom-6 right-0 text-[15vw] leading-none">WORK</div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+      <p class="text-mute text-[11px] tracking-[0.3em] uppercase reveal"><a href="#/" class="hover:text-gold transition">Home</a> <span class="text-gold mx-2">/</span> Gallery</p>
+      <h1 class="display-xl text-5xl md:text-7xl mt-6 reveal" style="--d:.08s">The <em class="italic text-gold font-light">Gallery</em></h1>
+      <p class="text-bone/80 max-w-xl mt-6 font-light leading-relaxed reveal" style="--d:.14s">Real cuts, real guests, real shop. Follow <span class="text-gold">@crownandco.barbers</span> for daily work from the chairs.</p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
+    <div class="flex flex-wrap gap-3 mb-12 reveal">
+      <button class="g-filter active" data-filter="all">All Work</button>
+      <button class="g-filter" data-filter="cuts">Haircuts</button>
+      <button class="g-filter" data-filter="beards">Beards</button>
+      <button class="g-filter" data-filter="shaves">Shaves</button>
+      <button class="g-filter" data-filter="shop">The Shop</button>
+    </div>
+    <div id="galleryGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-5"></div>
+    <p class="text-center text-mute text-xs tracking-[0.25em] uppercase mt-14 reveal">Tap any photo to view it full-screen</p>
+  </div>
+
+  <div data-component="cta"></div>
+</section>
+
+<!-- ################################################################## -->
+<!-- ========================== CONTACT PAGE ========================== -->
+<!-- ################################################################## -->
+<section class="page" data-page="contact">
+  <div class="relative pt-40 pb-24 overflow-hidden">
+    <div class="absolute inset-0"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1800&q=80" alt="" class="w-full h-full object-cover opacity-20"><div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/90 to-ink"></div></div>
+    <div class="outline-word absolute -bottom-6 right-0 text-[15vw] leading-none">HELLO</div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+      <p class="text-mute text-[11px] tracking-[0.3em] uppercase reveal"><a href="#/" class="hover:text-gold transition">Home</a> <span class="text-gold mx-2">/</span> Contact</p>
+      <h1 class="display-xl text-5xl md:text-7xl mt-6 reveal" style="--d:.08s">Contact &amp; <em class="italic text-gold font-light">Booking</em></h1>
+      <p class="text-bone/80 max-w-xl mt-6 font-light leading-relaxed reveal" style="--d:.14s">Questions, group bookings, or just want to talk fades? Send a message — we reply within one business day.</p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28 grid lg:grid-cols-12 gap-14">
+    <!-- Form -->
+    <div class="lg:col-span-7">
+      <div class="backdrop-panel border border-white/8 p-8 md:p-12 reveal">
+        <div id="formWrap">
+          <h2 class="font-display text-3xl">Send Us a Message</h2>
+          <p class="text-mute text-sm mt-2 font-light">Fields marked * are required.</p>
+          <form id="contactForm" class="mt-10 grid sm:grid-cols-2 gap-6" novalidate>
+            <div>
+              <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="cf-name">Full Name *</label>
+              <input class="field" id="cf-name" type="text" placeholder="James Moretti" autocomplete="name">
+              <p class="err-msg" data-err-for="cf-name">Please enter your name.</p>
+            </div>
+            <div>
+              <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="cf-email">Email *</label>
+              <input class="field" id="cf-email" type="email" placeholder="you@email.com" autocomplete="email">
+              <p class="err-msg" data-err-for="cf-email">Please enter a valid email address.</p>
+            </div>
+            <div>
+              <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="cf-phone">Phone *</label>
+              <input class="field" id="cf-phone" type="tel" placeholder="(905) 555-0000" autocomplete="tel">
+              <p class="err-msg" data-err-for="cf-phone">Please enter a valid phone number.</p>
+            </div>
+            <div>
+              <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="cf-topic">Topic</label>
+              <select class="field" id="cf-topic">
+                <option>General question</option>
+                <option>Booking inquiry</option>
+                <option>Group / event booking</option>
+                <option>Feedback</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="cf-msg">Message *</label>
+              <textarea class="field resize-none" id="cf-msg" rows="5" placeholder="How can we help?"></textarea>
+              <p class="err-msg" data-err-for="cf-msg">Please include a short message (10+ characters).</p>
+            </div>
+            <div class="sm:col-span-2 flex flex-wrap items-center gap-5">
+              <button type="submit" class="btn btn-gold"><span>Send Message</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </button>
+              <p class="text-mute text-xs font-light">Prefer to talk? <a href="tel:+19055550148" class="text-gold hover:underline">(905) 555-0148</a></p>
+            </div>
+          </form>
+        </div>
+        <div id="formSuccess" class="hidden text-center py-14">
+          <span class="inline-flex w-16 h-16 rounded-full border border-gold items-center justify-center mb-7">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c6a15b" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <h3 class="font-display text-3xl">Message Received.</h3>
+          <p class="text-mute mt-4 max-w-sm mx-auto font-light text-sm leading-relaxed">Thanks for reaching out — a member of the Crown &amp; Co. team will get back to you within one business day.</p>
+          <button id="formReset" class="btn btn-outline btn-sm mt-9"><span>Send Another Message</span></button>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="mt-14">
+        <h2 class="font-display text-3xl mb-8 reveal">Common <em class="italic text-gold font-light">Questions</em></h2>
+        <div class="space-y-3">
+          <div class="faq-item border border-white/8 bg-coal reveal">
+            <button class="faq-q w-full flex items-center justify-between gap-6 text-left p-6">
+              <span class="font-display text-lg transition-colors">Do you accept walk-ins?</span>
+              <span class="faq-icon text-gold text-2xl font-light leading-none shrink-0">+</span>
+            </button>
+            <div class="faq-a"><p class="px-6 pb-6 text-mute text-sm leading-relaxed font-light">Yes — walk-ins are welcome whenever a chair is free, but bookings always take priority. We recommend booking ahead, especially on Saturdays.</p></div>
+          </div>
+          <div class="faq-item border border-white/8 bg-coal reveal" style="--d:.06s">
+            <button class="faq-q w-full flex items-center justify-between gap-6 text-left p-6">
+              <span class="font-display text-lg transition-colors">Is there parking?</span>
+              <span class="faq-icon text-gold text-2xl font-light leading-none shrink-0">+</span>
+            </button>
+            <div class="faq-a"><p class="px-6 pb-6 text-mute text-sm leading-relaxed font-light">Free plaza parking right out front, plus additional spots behind the building off Langstaff Rd.</p></div>
+          </div>
+          <div class="faq-item border border-white/8 bg-coal reveal" style="--d:.12s">
+            <button class="faq-q w-full flex items-center justify-between gap-6 text-left p-6">
+              <span class="font-display text-lg transition-colors">What's your cancellation policy?</span>
+              <span class="faq-icon text-gold text-2xl font-light leading-none shrink-0">+</span>
+            </button>
+            <div class="faq-a"><p class="px-6 pb-6 text-mute text-sm leading-relaxed font-light">Life happens — we just ask for 3 hours' notice so we can offer the chair to someone else. Repeat no-shows may be asked to prepay future bookings.</p></div>
+          </div>
+          <div class="faq-item border border-white/8 bg-coal reveal" style="--d:.18s">
+            <button class="faq-q w-full flex items-center justify-between gap-6 text-left p-6">
+              <span class="font-display text-lg transition-colors">What products do you use?</span>
+              <span class="faq-icon text-gold text-2xl font-light leading-none shrink-0">+</span>
+            </button>
+            <div class="faq-a"><p class="px-6 pb-6 text-mute text-sm leading-relaxed font-light">We work with premium lines including Suavecito, Layrite and Proraso — everything we use in the chair is available for purchase in-shop.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info column -->
+    <div class="lg:col-span-5 space-y-6">
+      <div class="border border-gold/20 bg-gradient-to-br from-gold/10 to-transparent p-8 reveal">
+        <h3 class="font-display text-2xl">Book Instantly Online</h3>
+        <p class="text-mute text-sm mt-3 font-light leading-relaxed">Skip the phone tag. Reserve your chair in under a minute through our online booking portal.</p>
+        <button class="btn btn-gold w-full js-book mt-7"><span>Book an Appointment</span></button>
+        <a href="https://booking.crownandco.ca" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 mt-4 text-[11px] tracking-[0.25em] uppercase text-bone/70 hover:text-gold transition">
+          or visit booking.crownandco.ca
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+
+      <div class="border border-white/8 bg-coal p-8 reveal" style="--d:.08s">
+        <h3 class="font-display text-xl mb-6">Contact Information</h3>
+        <ul class="space-y-5 text-sm">
+          <li class="flex gap-4"><svg class="text-gold mt-0.5 shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="text-bone font-light">7840 Weston Rd, Unit 12<br>Vaughan, ON L4L 9N8</span></li>
+          <li class="flex gap-4"><svg class="text-gold shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg><a href="tel:+19055550148" class="text-bone font-light hover:text-gold transition">(905) 555-0148</a></li>
+          <li class="flex gap-4"><svg class="text-gold shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg><a href="mailto:bookings@crownandco.ca" class="text-bone font-light hover:text-gold transition">bookings@crownandco.ca</a></li>
+        </ul>
+        <div class="gold-divider my-7"></div>
+        <h4 class="text-[11px] tracking-[0.3em] uppercase text-bone mb-4">Opening Hours</h4>
+        <ul class="space-y-2.5 text-sm font-light">
+          <li class="flex justify-between text-bone"><span>Tuesday – Friday</span><span class="text-mute">9:00 AM – 8:00 PM</span></li>
+          <li class="flex justify-between text-bone"><span>Saturday</span><span class="text-mute">8:00 AM – 6:00 PM</span></li>
+          <li class="flex justify-between text-bone"><span>Sunday</span><span class="text-mute">10:00 AM – 4:00 PM</span></li>
+          <li class="flex justify-between text-bone"><span>Monday</span><span class="text-gold">Closed</span></li>
+        </ul>
+      </div>
+
+      <!-- Map placeholder -->
+      <div class="relative h-72 bg-[#121009] border border-white/8 overflow-hidden map-grid reveal" style="--d:.14s">
+        <div class="absolute w-[140%] h-9 bg-[#1b1812] -left-[20%] top-[36%] -rotate-6"></div>
+        <div class="absolute h-[140%] w-7 bg-[#1b1812] left-[34%] -top-[20%] rotate-12"></div>
+        <div class="absolute w-[140%] h-px -left-[20%] top-[39%] -rotate-6 border-t border-dashed border-gold/25"></div>
+        <div class="absolute left-[46%] top-[38%]">
+          <div class="pin-pulse relative w-10 h-10 rounded-full bg-gold flex items-center justify-center shadow-[0_0_30px_rgba(198,161,91,.45)]">
+            <svg width="16" height="16" viewBox="0 0 32 32" fill="#0d0c0a"><path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/><rect x="4" y="24" width="24" height="2.5" rx="1.25"/></svg>
+          </div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=7840+Weston+Road+Vaughan+ON" target="_blank" rel="noopener" class="absolute bottom-4 left-4 right-4 bg-ink/90 backdrop-blur border border-white/10 px-4 py-3 text-[10px] tracking-[0.25em] uppercase text-bone hover:text-gold hover:border-gold/40 transition flex items-center justify-center gap-2">
+          Open in Google Maps
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="border-t border-gold/15 bg-[#0a0908]">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <div>
+      <a href="#/" class="flex items-center gap-3">
+        <svg width="28" height="28" viewBox="0 0 32 32" class="text-gold" fill="currentColor"><path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/><rect x="4" y="24" width="24" height="2.5" rx="1.25"/></svg>
+        <span class="font-display text-xl">Crown <span class="text-gold">&amp;</span> Co.</span>
+      </a>
+      <p class="text-mute text-sm leading-relaxed mt-6 font-light">Vaughan's premier barbershop since 2012. Sharp cuts, hot towels, and the standard you deserve.</p>
+      <div class="flex gap-3 mt-7">
+        <a href="https://instagram.com/crownandco.barbers" target="_blank" rel="noopener" aria-label="Instagram" class="w-10 h-10 border border-white/12 flex items-center justify-center text-bone hover:text-gold hover:border-gold/50 transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://facebook.com/crownandcobarbers" target="_blank" rel="noopener" aria-label="Facebook" class="w-10 h-10 border border-white/12 flex items-center justify-center text-bone hover:text-gold hover:border-gold/50 transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://x.com/crownandco" target="_blank" rel="noopener" aria-label="X" class="w-10 h-10 border border-white/12 flex items-center justify-center text-bone hover:text-gold hover:border-gold/50 transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.3l7.3-8.3L1.2 2h6.4l4.4 5.9L18.9 2zm-1.1 18.1h1.7L7.1 3.8H5.3l12.5 16.3z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-[11px] tracking-[0.35em] uppercase text-gold mb-7">Explore</h4>
+      <ul class="space-y-3.5 text-sm font-light">
+        <li><a href="#/" class="text-bone hover:text-gold transition">Home</a></li>
+        <li><a href="#/services" class="text-bone hover:text-gold transition">Services &amp; Pricing</a></li>
+        <li><a href="#/about" class="text-bone hover:text-gold transition">Our Story</a></li>
+        <li><a href="#/gallery" class="text-bone hover:text-gold transition">Gallery</a></li>
+        <li><a href="#/contact" class="text-bone hover:text-gold transition">Contact</a></li>
+        <li><a href="https://booking.crownandco.ca" target="_blank" rel="noopener" class="text-bone hover:text-gold transition">Book Online</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-[11px] tracking-[0.35em] uppercase text-gold mb-7">Contact</h4>
+      <ul class="space-y-3.5 text-sm font-light text-bone">
+        <li>7840 Weston Rd, Unit 12</li>
+        <li>Vaughan, ON L4L 9N8</li>
+        <li><a href="tel:+19055550148" class="hover:text-gold transition">(905) 555-0148</a></li>
+        <li><a href="mailto:bookings@crownandco.ca" class="hover:text-gold transition">bookings@crownandco.ca</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-[11px] tracking-[0.35em] uppercase text-gold mb-7">Hours</h4>
+      <ul class="space-y-3.5 text-sm font-light">
+        <li class="flex justify-between gap-4 text-bone"><span>Tue – Fri</span><span class="text-mute">9 AM – 8 PM</span></li>
+        <li class="flex justify-between gap-4 text-bone"><span>Saturday</span><span class="text-mute">8 AM – 6 PM</span></li>
+        <li class="flex justify-between gap-4 text-bone"><span>Sunday</span><span class="text-mute">10 AM – 4 PM</span></li>
+        <li class="flex justify-between gap-4 text-bone"><span>Monday</span><span class="text-gold">Closed</span></li>
+      </ul>
+      <button class="btn btn-outline btn-sm js-book mt-8 w-full"><span>Book Your Chair</span></button>
+    </div>
+  </div>
+  <div class="border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-mute font-light">
+      <p>© <span id="year">2025</span> Crown &amp; Co. Barbershop. All rights reserved.</p>
+      <p class="tracking-[0.2em] uppercase">Handcrafted in Vaughan, Ontario</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================= LIGHTBOX ============================= -->
+<div id="lightbox" class="fixed inset-0 z-[320] hidden items-center justify-center" role="dialog" aria-modal="true">
+  <div class="absolute inset-0 bg-ink/95 backdrop-blur-sm" data-lb-close></div>
+  <button id="lbClose" class="absolute top-6 right-6 z-10 w-12 h-12 border border-white/20 flex items-center justify-center text-ivory hover:text-gold hover:border-gold transition" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <button id="lbPrev" class="absolute left-4 md:left-8 z-10 w-12 h-12 border border-white/20 flex items-center justify-center text-ivory hover:text-gold hover:border-gold transition" aria-label="Previous">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button id="lbNext" class="absolute right-4 md:right-8 z-10 w-12 h-12 border border-white/20 flex items-center justify-center text-ivory hover:text-gold hover:border-gold transition" aria-label="Next">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <figure class="relative max-w-4xl w-full mx-6 text-center">
+    <img id="lbImg" src="" alt="" class="max-h-[76vh] w-auto mx-auto object-contain border border-white/10 shadow-2xl">
+    <figcaption class="mt-5 flex items-center justify-center gap-5">
+      <span id="lbCap" class="font-display text-lg text-ivory"></span>
+      <span class="w-8 h-px bg-gold/40"></span>
+      <span id="lbCount" class="text-mute text-xs tracking-[0.3em]"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<!-- ============================= BOOKING MODAL ============================= -->
+<div id="bookingModal" class="fixed inset-0 z-[300] hidden" role="dialog" aria-modal="true" aria-label="Book an appointment">
+  <div class="absolute inset-0 bg-ink/85 backdrop-blur-md" data-close-booking></div>
+  <div id="bkPanel" class="absolute inset-x-4 top-[4vh] md:top-[7vh] max-w-2xl mx-auto bg-coal border border-gold/25 shadow-2xl max-h-[92vh] overflow-y-auto">
+    <div class="flex items-center justify-between px-7 md:px-10 py-6 border-b border-white/8 sticky top-0 bg-coal z-10">
+      <div>
+        <p class="eyebrow">Reservations</p>
+        <h3 class="font-display text-2xl mt-1.5">Reserve Your Chair</h3>
+      </div>
+      <button data-close-booking class="w-11 h-11 border border-white/15 flex items-center justify-center text-ivory hover:text-gold hover:border-gold transition" aria-label="Close booking">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Form view -->
+    <div id="bkFormView" class="px-7 md:px-10 py-8">
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="bkService">Service *</label>
+          <select id="bkService" class="field"></select>
+        </div>
+        <div>
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="bkBarber">Barber</label>
+          <select id="bkBarber" class="field"></select>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="bkDate">Date *</label>
+          <input id="bkDate" type="date" class="field">
+          <p class="err-msg" data-err-for="bkDate">Please choose a date (we're closed Mondays).</p>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-3">Available Times *</label>
+          <div id="bkSlots" class="grid grid-cols-4 sm:grid-cols-6 gap-2"></div>
+          <p class="err-msg" data-err-for="bkSlots">Please select a time slot.</p>
+        </div>
+        <div>
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="bkName">Full Name *</label>
+          <input id="bkName" type="text" class="field" placeholder="James Moretti" autocomplete="name">
+          <p class="err-msg" data-err-for="bkName">Please enter your name.</p>
+        </div>
+        <div>
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="bkPhone">Phone *</label>
+          <input id="bkPhone" type="tel" class="field" placeholder="(905) 555-0000" autocomplete="tel">
+          <p class="err-msg" data-err-for="bkPhone">Please enter a valid phone number.</p>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="bkEmail">Email *</label>
+          <input id="bkEmail" type="email" class="field" placeholder="you@email.com" autocomplete="email">
+          <p class="err-msg" data-err-for="bkEmail">Please enter a valid email address.</p>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-[11px] tracking-[0.25em] uppercase text-bone mb-2.5" for="bkNotes">Notes <span class="text-mute normal-case tracking-normal">(optional)</span></label>
+          <textarea id="bkNotes" rows="2" class="field resize-none" placeholder="Reference photos welcome on arrival, allergies, etc."></textarea>
+        </div>
+      </div>
+      <div id="bkSummary" class="mt-7 border border-gold/20 bg-gold/5 px-5 py-4 text-sm text-bone font-light"></div>
+      <button id="bkConfirm" class="btn btn-gold w-full mt-6"><span>Confirm Booking</span></button>
+      <p class="text-center text-mute text-[11px] mt-4 font-light">Free cancellation up to 3 hours before your appointment.</p>
+    </div>
+
+    <!-- Success view -->
+    <div id="bkSuccessView" class="hidden px-7 md:px-10 py-14 text-center">
+      <span class="inline-flex w-20 h-20 rounded-full border border-gold items-center justify-center mb-8">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c6a15b" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </span>
+      <h3 class="font-display text-3xl md:text-4xl">You're Booked In.</h3>
+      <p class="text-mute mt-3 font-light text-sm">A confirmation has been sent to your email.</p>
+      <div id="bkSuccessDetails" class="mt-9 border border-white/10 bg-ink/50 text-left divide-y divide-white/5 text-sm"></div>
+      <p class="mt-7 text-gold tracking-[0.3em] text-xs uppercase">Reference · <span id="bkRef" class="font-semibold"></span></p>
+      <button data-close-booking class="btn btn-outline mt-9"><span>Done — See You Soon</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Back to top -->
+<button id="backToTop" class="fixed bottom-7 right-7 z-[110] w-12 h-12 bg-gold text-ink items-center justify-center shadow-xl hover:bg-ivory transition hidden" aria-label="Back to top" style="display:none;">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+/* ============================================================================
+   CROWN & CO. — Application Script
+   Organized: DATA → COMPONENTS → ROUTER → UI SYSTEMS → INIT
+============================================================================ */
+(function () {
+'use strict';
+
+/* ------------------------------- HELPERS -------------------------------- */
+const $  = (s, c) => (c || document).querySelector(s);
+const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+const u  = (id, w) => 'https://images.unsplash.com/photo-' + id + '?auto=format&fit=crop&w=' + (w || 1000) + '&q=80';
+const FALLBACK_IMG = u('1503951914875-452162b0f3f1', 900);
+
+/* ------------------------------- SITE DATA ------------------------------ */
+const SITE = {
+  name: 'Crown & Co. Barbershop',
+  phone: '(905) 555-0148',
+  email: 'bookings@crownandco.ca',
+  address: '7840 Weston Rd, Unit 12, Vaughan, ON L4L 9N8',
+  bookingUrl: 'https://booking.crownandco.ca'
+};
+
+/* Hours indexed by JS getDay() — 0 = Sunday */
+const HOURS = [
+  { day: 'Sunday',    open: 10, close: 16 },
+  { day: 'Monday',    open: null, close: null },
+  { day: 'Tuesday',   open: 9,  close: 20 },
+  { day: 'Wednesday', open: 9,  close: 20 },
+  { day: 'Thursday',  open: 9,  close: 20 },
+  { day: 'Friday',    open: 9,  close: 20 },
+  { day: 'Saturday',  open: 8,  close: 18 }
+];
+
+const SERVICES = [
+  { id:'signature-cut', cat:'Cuts', name:'Signature Haircut', price:45, mins:45, img:'1503951914875-452162b0f3f1',
+    desc:'Consultation, precision cut tailored to your head shape, styled finish and a hot-lather neck shave.' },
+  { id:'skin-fade', cat:'Cuts', name:'Skin Fade', price:50, mins:50, img:'1605497788044-5a32c7078486',
+    desc:'Seamless zero-blend fade with razor-detailed edges and a styled finish. Our most requested cut.' },
+  { id:'buzz-lineup', cat:'Cuts', name:'Buzz Cut & Line-Up', price:30, mins:25, img:'1585747860715-2ba37e788b70',
+    desc:'Clean all-over clipper work finished with a crisp razor line-up and a hot towel.' },
+  { id:'kids-cut', cat:'Cuts', name:"Kids' Cut (12 & Under)", price:35, mins:30, img:'1503951914875-452162b0f3f1',
+    desc:'Patient, friendly service for young gentlemen. Same Crown standard, smaller chair.' },
+  { id:'seniors-cut', cat:'Cuts', name:"Senior's Cut (65+)", price:38, mins:40, img:'1493256338651-d82f7acb2b38',
+    desc:'Classic scissor work and traditional styling for the distinguished gentleman.' },
+  { id:'beard-trim', cat:'Beards & Shaves', name:'Beard Trim & Shape', price:30, mins:30, img:'1599351431202-1e0f0137899a',
+    desc:'Sculpted shaping with clipper and shear work, razor edges and conditioning beard oil.' },
+  { id:'hot-towel-shave', cat:'Beards & Shaves', name:'Hot Towel Straight Razor Shave', price:55, mins:45, img:'1621605815971-fbc98d665033',
+    desc:'Traditional multi-lather straight razor shave with hot towels, pre-shave oils and a cooling finish.' },
+  { id:'line-up', cat:'Beards & Shaves', name:'Line-Up / Edge-Up', price:25, mins:20, img:'1584486483122-af7d49cf2992',
+    desc:'Razor-sharp hairline, temples and neckline to keep you fresh between full cuts.' },
+  { id:'cut-beard', cat:'Packages & Extras', name:'Haircut + Beard Package', price:68, mins:75, img:'1599351431202-1e0f0137899a',
+    desc:'Our signature cut paired with a full beard sculpt and razor detailing. Save $7 versus booking separately.' },
+  { id:'crown-experience', cat:'Packages & Extras', name:'The Crown Experience', price:95, mins:100, img:'1621605815971-fbc98d665033',
+    desc:'Signature cut, hot towel straight razor shave, beard sculpt, facial cleanse and scalp massage. The full treatment.' }
+];
+
+const TEAM = [
+  { name:'Marcus Cole', role:'Founder & Master Barber', handle:'@marcuscuts', img:'1560250097-0b93528c311a',
+    bio:'Fifteen years behind the chair. Known for classic scissor work and impossible standards.' },
+  { name:'Dante Rivera', role:'Senior Barber', handle:'@dante.fades', img:'1507003211169-0a1dd7228f2d',
+    bio:'Fade specialist. If it is not blended to invisibility, it is not leaving his chair.' },
+  { name:'Elias Thorn', role:'Shave Specialist', handle:'@eliasthorn', img:'1506794778202-cad84cf45f1d',
+    bio:'Trained in traditional Turkish straight-razor technique. Steady hands, hot towels.' },
+  { name:'Jayden Okafor', role:'Barber & Stylist', handle:'@jaycuts', img:'1531891437562-4301cf35b7e4',
+    bio:'Texture, curls and modern crops. The youngest chair with the longest waitlist.' }
+];
+
+const TESTIMONIALS = [
+  { text:'Best fade I have had in the GTA, full stop. Dante took his time and the detail work around the line-up is unreal. I will not sit in another chair.', name:'Daniel R.', meta:'Woodbridge · Skin Fade', img:'1472099645785-5658abf4ff4e' },
+  { text:'The hot towel shave is an experience every man should treat himself to monthly. I walked out feeling like a million bucks.', name:'Anthony M.', meta:'Maple · Hot Towel Shave', img:'1500648767791-00dcc994a43e' },
+  { text:'Booked online, zero wait, espresso on arrival. Marcus remembered exactly how I like my cut from my last visit three months ago.', name:'Chris T.', meta:'Vaughan · Signature Cut', img:'1595152772835-219674b2a8a6' },
+  { text:'Took my son for his first proper haircut. Patient, kind, and the cut was sharp. We have been coming back ever since.', name:'Mark D.', meta:'Kleinburg · Kids Cut', img:'1519085360753-af0119f7cbe7' },
+  { text:'Clean shop, real professionals, fair prices. The Crown Experience is worth every single dollar.', name:'Jay P.', meta:'Concord · Crown Experience', img:'1507003211169-0a1dd7228f2d' }
+];
+
+const GALLERY = [
+  { img:'1503951914875-452162b0f3f1', cat:'cuts',   label:'Haircuts', cap:'Precision scissor work' },
+  { img:'1599351431202-1e0f0137899a', cat:'beards', label:'Beards',   cap:'Beard sculpt & razor edge' },
+  { img:'1585747860715-2ba37e788b70', cat:'shop',   label:'The Shop', cap:'The main floor' },
+  { img:'1621605815971-fbc98d665033', cat:'shaves', label:'Shaves',   cap:'Straight razor finish' },
+  { img:'1605497788044-5a32c7078486', cat:'cuts',   label:'Haircuts', cap:'Textured crop' },
+  { img:'1584486483122-af7d49cf2992', cat:'shaves', label:'Shaves',   cap:'Tools of the trade' },
+  { img:'1493256338651-d82f7acb2b38', cat:'shop',   label:'The Shop', cap:'Chair No. 1 — since 2012' },
+  { img:'1517832606299-7ae9b720a186', cat:'shop',   label:'The Shop', cap:'Weston Rd storefront' },
+  { img:'1622286342621-4bd786c2447c', cat:'shop',   label:'The Shop', cap:'Details matter' },
+  { img:'1503951914875-452162b0f3f1', cat:'cuts',   label:'Haircuts', cap:'Mid-fade, styled finish' }
+];
+
+/* ---------------------------- SVG SNIPPETS ------------------------------ */
+const STAR = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>';
+const ARROW = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+/* ============================================================================
+   REUSABLE COMPONENTS
+============================================================================ */
+function serviceCard(s, i) {
+  return '' +
+  '<article class="group reveal" style="--d:' + (i * 0.08) + 's">' +
+    '<div class="relative overflow-hidden aspect-[4/5] bg-smoke">' +
+      '<img src="' + u(s.img, 800) + '" alt="' + s.name + '" loading="lazy" class="w-full h-full object-cover transition duration-[1400ms] ease-out group-hover:scale-110">' +
+      '<div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent"></div>' +
+      '<div class="absolute top-4 right-4 bg-gold text-ink font-semibold text-sm px-3.5 py-1.5">$' + s.price + '</div>' +
+      '<div class="absolute bottom-0 inset-x-0 p-6">' +
+        '<p class="text-gold text-[10px] tracking-[0.3em] uppercase mb-2">' + s.cat + '</p>' +
+        '<h3 class="font-display text-2xl leading-snug">' + s.name + '</h3>' +
+        '<p class="text-bone/75 text-[13px] mt-2 font-light leading-relaxed">' + s.desc + '</p>' +
+        '<div class="flex items-center justify-between mt-5 pt-4 border-t border-white/10">' +
+          '<span class="text-mute text-[11px] tracking-[0.2em] uppercase">' + s.mins + ' min</span>' +
+          '<button class="js-book text-gold text-[11px] tracking-[0.25em] uppercase inline-flex items-center gap-2 hover:gap-3.5 transition-all" data-service="' + s.id + '">Book ' + ARROW + '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</article>';
+}
+
+function serviceRow(s, i) {
+  const num = ('0' + (i + 1)).slice(-2);
+  return '' +
+  '<article class="service-row reveal">' +
+    '<div class="grid lg:grid-cols-12 gap-4 lg:gap-6 items-center py-8 px-2 md:px-6">' +
+      '<div class="s-num lg:col-span-1 font-display text-xl text-mute/60">' + num + '</div>' +
+      '<div class="lg:col-span-6">' +
+        '<h3 class="font-display text-2xl md:text-[1.7rem]">' + s.name + '</h3>' +
+        '<p class="text-mute text-sm mt-2 font-light leading-relaxed max-w-xl">' + s.desc + '</p>' +
+      '</div>' +
+      '<div class="lg:col-span-2 text-mute text-xs tracking-[0.2em] uppercase">' + s.mins + ' min</div>' +
+      '<div class="s-price lg:col-span-2 font-display text-3xl text-gold">$' + s.price + '</div>' +
+      '<div class="lg:col-span-1 lg:text-right">' +
+        '<button class="js-book btn btn-outline btn-sm" data-service="' + s.id + '"><span>Book</span></button>' +
+      '</div>' +
+    '</div>' +
+  '</article>';
+}
+
+function teamCard(m, i) {
+  return '' +
+  '<article class="group reveal" style="--d:' + (i * 0.08) + 's">' +
+    '<div class="relative overflow-hidden aspect-[3/4] bg-smoke">' +
+      '<img src="' + u(m.img, 700) + '" alt="' + m.name + ', ' + m.role + '" loading="lazy" class="w-full h-full object-cover grayscale-[35%] transition duration-[1200ms] group-hover:grayscale-0 group-hover:scale-105">' +
+      '<div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent"></div>' +
+      '<div class="absolute bottom-0 inset-x-0 p-6">' +
+        '<p class="text-gold text-[10px] tracking-[0.3em] uppercase">' + m.role + '</p>' +
+        '<h3 class="font-display text-2xl mt-1.5">' + m.name + '</h3>' +
+        '<p class="text-bone/60 text-xs mt-1.5">' + m.handle + '</p>' +
+      '</div>' +
+    '</div>' +
+    '<p class="text-mute text-sm mt-5 font-light leading-relaxed">' + m.bio + '</p>' +
+  '</article>';
+}
+
+function testimonialSlide(t) {
+  return '' +
+  '<div class="w-full shrink-0 px-2 md:px-8">' +
+    '<div class="max-w-3xl mx-auto text-center">' +
+      '<div class="flex justify-center gap-1 text-gold mb-8">' + STAR + STAR + STAR + STAR + STAR + '</div>' +
+      '<blockquote class="font-display text-2xl md:text-[2rem] leading-relaxed font-light">&ldquo;' + t.text + '&rdquo;</blockquote>' +
+      '<div class="flex items-center justify-center gap-4 mt-9">' +
+        '<img src="' + u(t.img, 200) + '" alt="' + t.name + '" loading="lazy" class="w-13 h-13 md:w-14 md:h-14 rounded-full object-cover border border-gold/40" width="56" height="56">' +
+        '<div class="text-left"><p class="text-ivory font-medium text-sm tracking-wide">' + t.name + '</p><p class="text-mute text-xs mt-0.5">' + t.meta + '</p></div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function galleryItem(g, i) {
+  return '' +
+  '<figure class="g-item group relative mb-5 break-inside-avoid overflow-hidden cursor-pointer reveal" data-cat="' + g.cat + '" data-idx="' + i + '" style="--d:' + ((i % 3) * 0.07) + 's">' +
+    '<img src="' + u(g.img, 800) + '" alt="' + g.cap + '" loading="lazy" class="w-full transition duration-[1200ms] ease-out group-hover:scale-105">' +
+    '<figcaption class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/15 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex items-end p-5">' +
+      '<div><p class="text-gold text-[10px] tracking-[0.28em] uppercase">' + g.label + '</p><p class="font-display text-lg mt-1">' + g.cap + '</p></div>' +
+      '<span class="ml-auto w-9 h-9 border border-gold/50 text-gold flex items-center justify-center text-lg font-light shrink-0">+</span>' +
+    '</figcaption>' +
+  '</figure>';
+}
+
+function ctaBand() {
+  return '' +
+  '<section class="relative overflow-hidden">' +
+    '<div class="absolute inset-0"><img src="' + u('1512690459411-b9245aed614b', 1800) + '" alt="" loading="lazy" class="w-full h-full object-cover opacity-25"><div class="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-ink"></div></div>' +
+    '<div class="relative max-w-4xl mx-auto px-6 py-28 lg:py-36 text-center">' +
+      '<svg class="mx-auto mb-8 text-gold reveal" width="40" height="40" viewBox="0 0 32 32" fill="currentColor"><path d="M4 22l-1.5-11L10 15l6-9 6 9 7.5-4L28 22H4z"/><rect x="4" y="24" width="24" height="2.5" rx="1.25"/></svg>' +
+      '<h2 class="display-xl text-4xl md:text-6xl reveal" style="--d:.08s">Ready for <em class="italic text-gold font-light">the chair?</em></h2>' +
+      '<p class="text-bone/80 mt-6 font-light max-w-md mx-auto reveal" style="--d:.14s">Walk-ins welcome. Bookings recommended — especially Saturdays.</p>' +
+      '<div class="flex flex-wrap justify-center gap-4 mt-10 reveal" style="--d:.2s">' +
+        '<button class="btn btn-gold js-book"><span>Book an Appointment</span></button>' +
+        '<a href="tel:+19055550148" class="btn btn-outline"><span>Call ' + SITE.phone + '</span></a>' +
+      '</div>' +
+    '</div>' +
+  '</section>';
+}
+
+/* --------------------------- RENDER INTO DOM ---------------------------- */
+function renderAll() {
+  const featured = ['signature-cut', 'skin-fade', 'hot-towel-shave', 'cut-beard']
+    .map(id => SERVICES.find(s => s.id === id));
+  $('#featuredServices').innerHTML = featured.map(serviceCard).join('');
+
+  const groups = [
+    ['Cuts', 'Precision cutting, tailored to your head shape and lifestyle.'],
+    ['Beards & Shaves', 'Traditional barbering, done properly.'],
+    ['Packages & Extras', 'The full Crown treatment — our best value.']
+  ];
+  $('#serviceGroups').innerHTML = groups.map(function (g, gi) {
+    const items = SERVICES.filter(s => s.cat === g[0]);
+    return '<div class="mb-20">' +
+      '<div class="flex items-end gap-8 mb-4 reveal">' +
+        '<div><p class="eyebrow">0' + (gi + 1) + '</p>' +
+        '<h2 class="font-display text-3xl md:text-4xl mt-3">' + g[0] + '</h2>' +
+        '<p class="text-mute text-sm mt-2 font-light">' + g[1] + '</p></div>' +
+        '<span class="hidden md:block h-px flex-1 bg-white/5 mb-5"></span>' +
+      '</div>' +
+      '<div class="border-t border-white/5">' + items.map(serviceRow).join('') + '</div>' +
+    '</div>';
+  }).join('');
+
+  $('#teamGrid').innerHTML = TEAM.map(teamCard).join('');
+
+  $('#tsTrack').innerHTML = TESTIMONIALS.map(testimonialSlide).join('');
+  $('#tsDots').innerHTML = TESTIMONIALS.map(function (_, i) {
+    return '<span class="ts-dot' + (i === 0 ? ' active' : '') + '" data-i="' + i + '"></span>';
+  }).join('');
+
+  $('#galleryGrid').innerHTML = GALLERY.map(galleryItem).join('');
+
+  $('#previewGallery').innerHTML = GALLERY.slice(0, 4).map(function (g, i) {
+    return '<a href="#/gallery" class="group relative overflow-hidden aspect-[3/4] reveal block" style="--d:' + (i * 0.08) + 's">' +
+      '<img src="' + u(g.img, 700) + '" alt="' + g.cap + '" loading="lazy" class="w-full h-full object-cover transition duration-[1200ms] group-hover:scale-108 group-hover:scale-110">' +
+      '<div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex items-end p-5">' +
+        '<p class="font-display text-lg">' + g.cap + '</p></div></a>';
+  }).join('');
+
+  /* Hours list (home) with today highlighted */
+  const today = new Date().getDay();
+  const order = [2, 3, 4, 5, 6, 0, 1];
+  $('#hoursList').innerHTML = order.map(function (d) {
+    const h = HOURS[d];
+    const isToday = d === today;
+    const label = h.open === null ? 'Closed' : fmtHour(h.open) + ' – ' + fmtHour(h.close);
+    return '<div class="flex items-center justify-between py-3.5 border-b border-white/5 text-sm ' + (isToday ? 'hour-today' : 'text-bone') + '">' +
+      '<span class="flex items-center gap-3 font-light">' + h.day + (isToday ? '<span class="text-[9px] tracking-[0.25em] uppercase border border-gold/40 text-gold px-2 py-0.5">Today</span>' : '') + '</span>' +
+      '<span class="' + (h.open === null ? 'text-gold' : 'text-mute') + ' font-light">' + label + '</span></div>';
+  }).join('');
+
+  /* Open-now badge */
+  const now = new Date();
+  const h = HOURS[now.getDay()];
+  const hourNow = now.getHours() + now.getMinutes() / 60;
+  const open = h.open !== null && hourNow >= h.open && hourNow < h.close;
+  $('#openBadge').textContent = open ? 'Open now — walk-ins welcome' : 'Currently closed — book ahead online';
+  $('#openDot').className = 'w-2 h-2 rounded-full ' + (open ? 'bg-gold animate-pulse' : 'bg-mute');
+
+  /* Inject reusable CTA bands */
+  $$('[data-component="cta"]').forEach(el => { el.innerHTML = ctaBand(); });
+
+  /* Booking modal selects */
+  $('#bkService').innerHTML = SERVICES.map(s =>
+    '<option value="' + s.id + '">' + s.name + ' — $' + s.price + '</option>').join('');
+  $('#bkBarber').innerHTML = '<option value="Any">First available barber</option>' +
+    TEAM.map(m => '<option value="' + m.name + '">' + m.name + ' — ' + m.role + '</option>').join('');
+
+  $('#year').textContent = new Date().getFullYear();
+}
+
+function fmtHour(h) {
+  const hr = h % 12 === 0 ? 12 : h % 12;
+  return hr + ':00 ' + (h < 12 ? 'AM' : 'PM');
+}
+
+/* ============================================================================
+   ROUTER (hash-based multi-page)
+============================================================================ */
+const ROUTES = ['home', 'services', 'about', 'gallery', 'contact'];
+const TITLES = {
+  home: 'Crown & Co. Barbershop — Vaughan, ON | Sharp Cuts. Timeless Confidence.',
+  services: 'Services & Pricing — Crown & Co. Barbershop, Vaughan',
+  about: 'Our Story & Team — Crown & Co. Barbershop, Vaughan',
+  gallery: 'Gallery — Crown & Co. Barbershop, Vaughan',
+  contact: 'Contact & Booking — Crown & Co. Barbershop, Vaughan'
+};
+let activeRoute = null;
+let transitioning = false;
+
+function currentRoute() {
+  const h = location.hash.replace('#/', '').replace('#', '').trim();
+  return ROUTES.indexOf(h) !== -1 ? h : 'home';
+}
+
+function activatePage(route) {
+  $$('.page').forEach(p => p.classList.remove('active'));
+  const page = $('.page[data-page="' + route + '"]');
+  page.classList.add('active');
+  activeRoute = route;
+  document.title = TITLES[route];
+  $$('.nav-link').forEach(l => l.classList.toggle('active', l.dataset.route === route));
+  observeReveals(page);
+  if (window.gsap) gsap.fromTo(page, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out', clearProps: 'all' });
+}
+
+function transitionTo(route) {
+  if (transitioning) return;
+  transitioning = true;
+  const pt = $('#pageTransition');
+  pt.style.visibility = 'visible';
+  if (!window.gsap) { activatePage(route); window.scrollTo(0, 0); pt.style.visibility = 'hidden'; transitioning = false; return; }
+  gsap.timeline({ onComplete: () => { pt.style.visibility = 'hidden'; transitioning = false; } })
+    .set(['.tp-gold', '.tp-ink'], { transformOrigin: 'bottom' })
+    .to('.tp-gold', { scaleY: 1, duration: 0.45, ease: 'power3.inOut' })
+    .to('.tp-ink', { scaleY: 1, duration: 0.45, ease: 'power3.inOut' }, '-=0.34')
+    .add(() => { activatePage(route); window.scrollTo(0, 0); })
+    .set(['.tp-gold', '.tp-ink'], { transformOrigin: 'top' })
+    .to('.tp-ink', { scaleY: 0, duration: 0.55, ease: 'power3.inOut' }, '+=0.05')
+    .to('.tp-gold', { scaleY: 0, duration: 0.55, ease: 'power3.inOut' }, '-=0.42');
+}
+
+function onRouteChange() {
+  const r = currentRoute();
+  if (r === activeRoute) return;
+  closeMobileMenu();
+  transitionTo(r);
+}
+window.addEventListener('hashchange', onRouteChange);
+
+/* ============================================================================
+   REVEAL ON SCROLL + COUNTERS
+============================================================================ */
+const revealIO = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) {
+    if (!en.isIntersecting) return;
+    en.target.classList.add('revealed');
+    $$('.counter', en.target.parentElement || document).length; // noop guard
+    revealIO.unobserve(en.target);
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+const counterIO = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) {
+    if (!en.isIntersecting) return;
+    animateCount(en.target);
+    counterIO.unobserve(en.target);
+  });
+}, { threshold: 0.5 });
+
+function observeReveals(scope) {
+  $$('.reveal:not(.revealed)', scope).forEach(el => revealIO.observe(el));
+  $$('.counter:not(.counted)', scope).forEach(el => counterIO.observe(el));
+}
+
+function animateCount(el) {
+  el.classList.add('counted');
+  const target = parseFloat(el.dataset.count);
+  const decimals = String(el.dataset.count).indexOf('.') !== -1 ? 1 : 0;
+  const dur = 1700;
+  const start = performance.now();
+  (function tick(t) {
+    const p = Math.min((t - start) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = (target * e).toFixed(decimals);
+    if (p < 1) requestAnimationFrame(tick);
+  })(start);
+}
+
+/* ============================================================================
+   HEADER / MOBILE MENU / BACK TO TOP
+============================================================================ */
+const header = $('#siteHeader');
+window.addEventListener('scroll', function () {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+  const btt = $('#backToTop');
+  const show = window.scrollY > 700;
+  btt.style.display = show ? 'flex' : 'none';
+}, { passive: true });
+
+$('#backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+const mobileMenu = $('#mobileMenu');
+function openMobileMenu() {
+  mobileMenu.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  if (window.gsap) {
+    gsap.fromTo(mobileMenu, { opacity: 0 }, { opacity: 1, duration: 0.35 });
+    gsap.fromTo($$('.m-link', mobileMenu), { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.07, ease: 'power3.out', delay: 0.1 });
+  }
+}
+function closeMobileMenu() {
+  if (mobileMenu.style.display !== 'flex') return;
+  document.body.style.overflow = '';
+  if (window.gsap) gsap.to(mobileMenu, { opacity: 0, duration: 0.3, onComplete: () => { mobileMenu.style.display = 'none'; } });
+  else mobileMenu.style.display = 'none';
+}
+$('#menuBtn').addEventListener('click', openMobileMenu);
+$('#closeMenuBtn').addEventListener('click', closeMobileMenu);
+$$('.m-link').forEach(l => l.addEventListener('click', closeMobileMenu));
+
+/* ============================================================================
+   TESTIMONIAL SLIDER
+============================================================================ */
+let tsIndex = 0, tsTimer = null;
+function tsGo(i) {
+  tsIndex = (i + TESTIMONIALS.length) % TESTIMONIALS.length;
+  $('#tsTrack').style.transform = 'translateX(-' + (tsIndex * 100) + '%)';
+  $$('.ts-dot').forEach((d, di) => d.classList.toggle('active', di === tsIndex));
+}
+function tsAuto() { clearInterval(tsTimer); tsTimer = setInterval(() => tsGo(tsIndex + 1), 6500); }
+$('#tsPrev').addEventListener('click', () => { tsGo(tsIndex - 1); tsAuto(); });
+$('#tsNext').addEventListener('click', () => { tsGo(tsIndex + 1); tsAuto(); });
+document.addEventListener('click', function (e) {
+  const dot = e.target.closest('.ts-dot');
+  if (dot) { tsGo(parseInt(dot.dataset.i, 10)); tsAuto(); }
+});
+tsAuto();
+
+/* ============================================================================
+   GALLERY FILTER + LIGHTBOX
+============================================================================ */
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.g-filter');
+  if (!btn) return;
+  $$('.g-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  $$('.g-item').forEach(function (it) {
+    const show = f === 'all' || it.dataset.cat === f;
+    if (show) {
+      it.classList.remove('hidden');
+      requestAnimationFrame(() => requestAnimationFrame(() => it.classList.remove('g-hide')));
+    } else {
+      it.classList.add('g-hide');
+      setTimeout(() => { if (it.classList.contains('g-hide')) it.classList.add('hidden'); }, 320);
+    }
+  });
+});
+
+const lightbox = $('#lightbox');
+let lbList = [], lbIndex = 0;
+
+function openLightbox(globalIdx) {
+  lbList = $$('.g-item').filter(it => !it.classList.contains('hidden'));
+  const clicked = $('.g-item[data-idx="' + globalIdx + '"]');
+  lbIndex = Math.max(0, lbList.indexOf(clicked));
+  renderLightbox();
+  lightbox.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  if (window.gsap) gsap.fromTo(lightbox, { opacity: 0 }, { opacity: 1, duration: 0.35 });
+}
+function renderLightbox() {
+  const item = lbList[lbIndex];
+  if (!item) return;
+  const g = GALLERY[parseInt(item.dataset.idx, 10)];
+  const img = $('#lbImg');
+  img.src = u(g.img, 1400);
+  img.alt = g.cap;
+  $('#lbCap').textContent = g.cap;
+  $('#lbCount').textContent = (lbIndex + 1) + ' / ' + lbList.length;
+  if (window.gsap) gsap.fromTo(img, { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' });
+}
+function closeLightbox() {
+  document.body.style.overflow = '';
+  if (window.gsap) gsap.to(lightbox, { opacity: 0, duration: 0.3, onComplete: () => { lightbox.style.display = 'none'; } });
+  else lightbox.style.display = 'none';
+}
+document.addEventListener('click', function (e) {
+  const item = e.target.closest('.g-item');
+  if (item) openLightbox(parseInt(item.dataset.idx, 10));
+});
+$('#lbClose').addEventListener('click', closeLightbox);
+$('[data-lb-close]').addEventListener('click', closeLightbox);
+$('#lbPrev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + lbList.length) % lbList.length; renderLightbox(); });
+$('#lbNext').addEventListener('click', () => { lbIndex = (lbIndex + 1) % lbList.length; renderLightbox(); });
+
+/* ============================================================================
+   BOOKING MODAL
+============================================================================ */
+const modal = $('#bookingModal');
+let selectedSlot = null;
+
+function openBooking(serviceId) {
+  if (serviceId) $('#bkService').value = serviceId;
+  const dateInput = $('#bkDate');
+  const today = new Date();
+  const iso = today.toISOString().split('T')[0];
+  dateInput.min = iso;
+  if (!dateInput.value) dateInput.value = iso;
+  $('#bkFormView').classList.remove('hidden');
+  $('#bkSuccessView').classList.add('hidden');
+  renderSlots();
+  updateSummary();
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  if (window.gsap) gsap.fromTo('#bkPanel', { y: 44, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out' });
+}
+function closeBooking() {
+  document.body.style.overflow = '';
+  if (window.gsap) gsap.to('#bkPanel', { y: 30, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => { modal.style.display = 'none'; } });
+  else modal.style.display = 'none';
+}
+
+document.addEventListener('click', function (e) {
+  const b = e.target.closest('.js-book');
+  if (b) { e.preventDefault(); closeMobileMenu(); openBooking(b.dataset.service || null); }
+  if (e.target.closest('[data-close-booking]')) closeBooking();
+});
+
+function generateSlots(dateStr, barber) {
+  const d = new Date(dateStr + 'T12:00:00');
+  if (isNaN(d)) return { closed: true, slots: [] };
+  const h = HOURS[d.getDay()];
+  if (h.open === null) return { closed: true, slots: [] };
+  const slots = [];
+  for (let t = h.open * 60; t <= h.close * 60 - 30; t += 30) slots.push(t);
+  /* Deterministic pseudo-random "taken" slots so availability feels real */
+  let seed = 0;
+  const key = dateStr + '|' + barber;
+  for (let i = 0; i < key.length; i++) seed = (seed * 31 + key.charCodeAt(i)) >>> 0;
+  const rand = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+  const now = new Date();
+  const isToday = dateStr === now.toISOString().split('T')[0];
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  return {
+    closed: false,
+    slots: slots.map(m => ({ m: m, taken: rand() < 0.28 || (isToday && m <= nowMins + 30) }))
+  };
+}
+
+function fmtMins(m) {
+  let h = Math.floor(m / 60), mm = m % 60;
+  const ap = h < 12 ? 'AM' : 'PM';
+  h = h % 12 === 0 ? 12 : h % 12;
+  return h + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
+}
+
+function renderSlots() {
+  const box = $('#bkSlots');
+  selectedSlot = null;
+  const dateStr = $('#bkDate').value;
+  const barber = $('#bkBarber').value;
+  const res = generateSlots(dateStr, barber);
+  if (res.closed) {
+    box.innerHTML = '<p class="col-span-full text-mute text-sm font-light py-3">We are closed on this day — please choose another date.</p>';
+    return;
+  }
+  const anyOpen = res.slots.some(s => !s.taken);
+  if (!anyOpen) {
+    box.innerHTML = '<p class="col-span-full text-mute text-sm font-light py-3">Fully booked for this day — try another date or barber.</p>';
+    return;
+  }
+  box.innerHTML = res.slots.map(function (s) {
+    return '<button type="button" class="slot' + (s.taken ? ' taken' : '') + '" data-m="' + s.m + '"' + (s.taken ? ' disabled' : '') + '>' + fmtMins(s.m) + '</button>';
+  }).join('');
+}
+
+$('#bkSlots').addEventListener('click', function (e) {
+  const chip = e.target.closest('.slot');
+  if (!chip || chip.classList.contains('taken')) return;
+  $$('.slot', this).forEach(c => c.classList.remove('sel'));
+  chip.classList.add('sel');
+  selectedSlot = parseInt(chip.dataset.m, 10);
+  hideErr('bkSlots');
+  updateSummary();
+});
+['bkService', 'bkBarber', 'bkDate'].forEach(id => {
+  $('#' + id).addEventListener('change', function () {
+    if (id !== 'bkService') renderSlots();
+    hideErr('bkDate');
+    updateSummary();
+  });
+});
+
+function updateSummary() {
+  const s = SERVICES.find(x => x.id === $('#bkService').value);
+  const dateStr = $('#bkDate').value;
+  const d = dateStr ? new Date(dateStr + 'T12:00:00') : null;
+  const dateLabel = d && !isNaN(d) ? d.toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric' }) : '—';
+  $('#bkSummary').innerHTML =
+    '<span class="text-gold">' + s.name + '</span> · $' + s.price + ' CAD · approx. ' + s.mins + ' min<br>' +
+    '<span class="text-mute">' + dateLabel + (selectedSlot !== null ? ' at ' + fmtMins(selectedSlot) : '') + ' · ' + $('#bkBarber').value + '</span>';
+}
+
+/* Validation helpers */
+function showErr(id) { const f = $('#' + id); if (f) f.classList.add('err'); const m = $('[data-err-for="' + id + '"]'); if (m) m.classList.add('show'); }
+function hideErr(id) { const f = $('#' + id); if (f) f.classList.remove('err'); const m = $('[data-err-for="' + id + '"]'); if (m) m.classList.remove('show'); }
+const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+const validPhone = v => v.replace(/\D/g, '').length >= 10;
+
+$('#bkConfirm').addEventListener('click', function () {
+  let ok = true;
+  const dateStr = $('#bkDate').value;
+  const d = dateStr ? new Date(dateStr + 'T12:00:00') : null;
+  if (!d || isNaN(d) || HOURS[d.getDay()].open === null) { showErr('bkDate'); ok = false; } else hideErr('bkDate');
+  if (selectedSlot === null) { showErr('bkSlots'); ok = false; } else hideErr('bkSlots');
+  if ($('#bkName').value.trim().length < 2) { showErr('bkName'); ok = false; } else hideErr('bkName');
+  if (!validPhone($('#bkPhone').value)) { showErr('bkPhone'); ok = false; } else hideErr('bkPhone');
+  if (!validEmail($('#bkEmail').value.trim())) { showErr('bkEmail'); ok = false; } else hideErr('bkEmail');
+  if (!ok) return;
+
+  const s = SERVICES.find(x => x.id === $('#bkService').value);
+  const ref = 'CC-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+  $('#bkRef').textContent = ref;
+  const rows = [
+    ['Service', s.name + ' — $' + s.price + ' CAD'],
+    ['Barber', $('#bkBarber').value],
+    ['Date', d.toLocaleDateString('en-CA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })],
+    ['Time', fmtMins(selectedSlot) + ' (' + s.mins + ' min)'],
+    ['Guest', $('#bkName').value.trim()],
+    ['Contact', $('#bkPhone').value.trim() + ' · ' + $('#bkEmail').value.trim()]
+  ];
+  $('#bkSuccessDetails').innerHTML = rows.map(r =>
+    '<div class="flex justify-between gap-6 px-5 py-3.5"><span class="text-mute">' + r[0] + '</span><span class="text-ivory text-right font-light">' + r[1] + '</span></div>').join('');
+  $('#bkFormView').classList.add('hidden');
+  const sv = $('#bkSuccessView');
+  sv.classList.remove('hidden');
+  $('#bkPanel').scrollTop = 0;
+  if (window.gsap) gsap.fromTo(sv, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+});
+
+/* ============================================================================
+   CONTACT FORM
+============================================================================ */
+$('#contactForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  let ok = true;
+  if ($('#cf-name').value.trim().length < 2) { showErr('cf-name'); ok = false; } else hideErr('cf-name');
+  if (!validEmail($('#cf-email').value.trim())) { showErr('cf-email'); ok = false; } else hideErr('cf-email');
+  if (!validPhone($('#cf-phone').value)) { showErr('cf-phone'); ok = false; } else hideErr('cf-phone');
+  if ($('#cf-msg').value.trim().length < 10) { showErr('cf-msg'); ok = false; } else hideErr('cf-msg');
+  if (!ok) return;
+  $('#formWrap').classList.add('hidden');
+  const fs = $('#formSuccess');
+  fs.classList.remove('hidden');
+  if (window.gsap) gsap.fromTo(fs, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+});
+$('#formReset').addEventListener('click', function () {
+  $('#contactForm').reset();
+  $('#formSuccess').classList.add('hidden');
+  $('#formWrap').classList.remove('hidden');
+});
+['cf-name', 'cf-email', 'cf-phone', 'cf-msg', 'bkName', 'bkPhone', 'bkEmail'].forEach(id => {
+  const el = $('#' + id);
+  if (el) el.addEventListener('input', () => hideErr(id));
+});
+
+/* ============================================================================
+   FAQ ACCORDION
+============================================================================ */
+$$('.faq-q').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    $$('.faq-item').forEach(function (i) {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if (!wasOpen) {
+      item.classList.add('open');
+      const a = item.querySelector('.faq-a');
+      a.style.maxHeight = a.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ============================================================================
+   GLOBAL KEYS / IMAGE FALLBACK
+============================================================================ */
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    if (lightbox.style.display === 'flex') closeLightbox();
+    if (modal.style.display === 'block') closeBooking();
+    closeMobileMenu();
+  }
+  if (lightbox.style.display === 'flex') {
+    if (e.key === 'ArrowRight') $('#lbNext').click();
+    if (e.key === 'ArrowLeft') $('#lbPrev').click();
+  }
+});
+document.addEventListener('error', function (e) {
+  const t = e.target;
+  if (t && t.tagName === 'IMG' && !t.dataset.fb) { t.dataset.fb = '1'; t.src = FALLBACK_IMG; }
+}, true);
+
+/* ============================================================================
+   CUSTOM CURSOR (desktop only)
+============================================================================ */
+if (window.matchMedia('(pointer:fine)').matches) {
+  const dot = $('#cursorDot'), ring = $('#cursorRing');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function loop() {
+    rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+    dot.style.transform = 'translate(' + (mx - 2.5) + 'px,' + (my - 2.5) + 'px)';
+    ring.style.transform = 'translate(' + (rx - 17) + 'px,' + (ry - 17) + 'px)';
+    requestAnimationFrame(loop);
+  })();
+  document.addEventListener('mouseover', function (e) {
+    if (e.target.closest('a, button, .g-item, .slot, .ts-dot')) ring.classList.add('grow');
+  });
+  document.addEventListener('mouseout', function (e) {
+    if (e.target.closest('a, button, .g-item, .slot, .ts-dot')) ring.classList.remove('grow');
+  });
+} else {
+  $('#cursorDot').style.display = 'none';
+  $('#cursorRing').style.display = 'none';
+}
+
+/* ============================================================================
+   PRELOADER + HERO INTRO
+============================================================================ */
+let preloaderDone = false;
+function hidePreloader() {
+  if (preloaderDone) return;
+  preloaderDone = true;
+  const pre = $('#preloader');
+  const finish = function () {
+    pre.style.display = 'none';
+    heroIntro();
+  };
+  if (window.gsap) gsap.to(pre, { opacity: 0, duration: 0.7, ease: 'power2.inOut', onComplete: finish });
+  else finish();
+}
+function heroIntro() {
+  if (!window.gsap) return;
+  gsap.to('.hero-line', { y: 0, duration: 1.15, stagger: 0.14, ease: 'power4.out' });
+  gsap.to('.hero-fade', { opacity: 1, y: 0, duration: 1, stagger: 0.09, ease: 'power3.out', delay: 0.35 });
+}
+window.addEventListener('load', () => setTimeout(hidePreloader, 900));
+setTimeout(hidePreloader, 3800); /* safety fallback */
+
+/* ============================================================================
+   INIT
+============================================================================ */
+if (window.gsap) {
+  gsap.set('.hero-line', { y: '112%' });
+  gsap.set('.hero-fade', { opacity: 0, y: 26 });
+}
+renderAll();
+activatePage(currentRoute());
+observeReveals(document);
+
+})();
+</script>
+</body>
+</html>
